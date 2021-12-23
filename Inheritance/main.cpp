@@ -2,37 +2,34 @@
 
 using namespace std;
 
-class base {
-private:
-	int _i;
-	int _j;
+class figure {
+protected:
+	double _x;
+	double _y;
 public:
-	base() { _i = _j = 0; cout << "base()\n"; }
-	base(int i, int j) {
-		_i = i;
-		_j = j;
-		cout << "base(int, int)\n";
-	}
-	~base() { cout << "~base()\n"; }
-	void set(int i, int j) { _i = i; _j = j; }
-	int getI() { return _i; }
-	int getJ() { return _j; }
-	void show() { cout << "i=" << _i << "; j=" << _j << endl; }
+	void set(double x, double y) { _x = x; _y = y; }
+	int getX() { return _x; }
+	int getY() { return _y; }
+	void print() { cout << "x= " << _x << "; y= " << _y << ";\n"; }
+	virtual void show_area() { cout << "error\n"; }
 };
-class derived : public base {
-private:
-	int _k;
+class Rectangle : public figure {
 public:
-	derived() { cout << "derived()\n"; _k = 0; }
-	derived(int k) { cout << "derived(int)\n"; _k = k; }
-	~derived() { cout << "~derived()\n"; }
-	void setK(int k) { _k = k; }
-	int getK() { return _k; }
-	void showK() { cout << "k=" << _k << endl; }
+	void show_area() { cout << "sides: \n" << "a= " << _x << ", b= " << _y << ";\n" << "S= " << _x * _y << ";\n"; }
+};
+class Triangle : public figure {
+public:
+	void show_area() { cout << "sides: \n" << "a= " << _x << ", b= " << _y << ";\n" << "S= " << (_x * _y) / 2 << ";\n"; }
 };
 
 int main() {
-	derived ob(3);
-	ob.show();
-	ob.showK();
+	figure* f;
+	Rectangle r;
+	Triangle rt;
+	f = &r;
+	f->set(3, 4);
+	f->show_area();
+	f = &rt;
+	f->set(6, 8);
+	f->show_area();
 }
